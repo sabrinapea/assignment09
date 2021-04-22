@@ -5,7 +5,6 @@ let employees = [[98765412,'Sueky Su', 3568, 'suekys@gmail.com', 'marketing'],
                 [98551023,'Nidhi Paneer', 2301, 'npaneer@gmail.com', 'QA'],
                 [12389990,'Mary Smith', 7041, 'msmith@gmail.com', 'executive']];
 
-// GET THE ADD EMPLOYEE FORM AND EMPLOYEE TABLE FROM THE DOM
 let form = document.querySelector('#addForm');
 let empTable = document.querySelector('#employees');
 
@@ -30,7 +29,6 @@ function buildGrid() {
 
         // ADD DELETE BUTTON
         rowContents += `<td><button class='btn btn-danger btn-sm float-right delete'>X</button></td>`;
-
         rowNode.innerHTML = rowContents;
         tableBody.appendChild(rowNode);
     }
@@ -38,9 +36,6 @@ function buildGrid() {
 
 // RUN BUILD GRID ON DOCUMENT LOAD
 buildGrid();
-// document.body.addEventListener('load', (e) => {
-//     buildGrid();
-// });
 
 // ADD EMPLOYEE
 form.addEventListener('submit', (e) => {
@@ -84,31 +79,24 @@ empTable.addEventListener('click', (e) => {
             employees.splice(e.target.parentNode.parentNode.rowIndex, 1);
         }
     }
-
     // REBUILD TABLE
     buildGrid();
 });
         
 
-        // REMOVE EMPLOYEE FROM ARRAY
-        // employeeList.deleteRow(index);
+    // REMOVE EMPLOYEE FROM ARRAY
 
-        // BUILD THE GRID
+    // BUILD THE GRID
 
+    // BUILD THE EMPLOYEES GRID
 
-
-// BUILD THE EMPLOYEES GRID
-// function buildGrid() {
     // REMOVE THE EXISTING SET OF ROWS BY REMOVING THE ENTIRE TBODY SECTION
 
     // REBUILD THE TBODY FROM SCRATCH
 
     // LOOP THROUGH THE ARRAY OF EMPLOYEES
-    // for (let i = 0; i < employee.length; i++) {
-
-    // }
+  
     // REBUILDING THE ROW STRUCTURE
-
 
     // BIND THE TBODY TO THE EMPLOYEE TABLE
 
