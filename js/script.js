@@ -5,35 +5,44 @@ let employees = [[98765412,'Sueky Su', 3568, 'suekys@gmail.com', 'marketing'],
                 [98551023,'Nidhi Paneer', 2301, 'npaneer@gmail.com', 'QA'],
                 [12389990,'Mary Smith', 7041, 'msmith@gmail.com', 'executive']];
 
+// GET THE ADD EMPLOYEE FORM AND EMPLOYEE TABLE FROM THE DOM
+let form = document.querySelector('#addForm');
+let empTable = document.querySelector('#employees');
+
+// CHECK TO SEE IF STORAGE OBJECT EXISTS WHEN THE PAGE LOADS
+if (localStorage.length > 0) {
+    // IF DOES, RETURN STORAGE OBJECT INTO ARRAY INSTEAD OF POPULATED ARRAY
+    employees = localStorage.getItem('employees').split(',');
+}
 
 function buildGrid() {
-    // CHECK TO SEE IF STORAGE OBJECT EXISTS WHEN THE PAGE LOADS
-
-    if (localStorage.length > 0) {
-    // IF DOES, RETURN STORAGE OBJECT INTO ARRAY INSTEAD OF POPULATED ARRAY
-            employees = localStorage.getItem('employees').split(',');
-    }
     // GET DOM ELEMENTS
-    const $ = (id) => {
-        return document.getElementById(id);
-    };
+    let tableBody = document.querySelector('#employees tbody');
 
     // BUILD THE EMPLOYEES TABLE WHEN THE PAGE LOADS
-    let tableBody = document.querySelector('#employees tbody');
     tableBody.innerHTML = '';
     for (let emp of employees) {
         let rowNode = document.createElement('tr');
         let rowContents = '';
         for (let infoEmp of emp) {
             rowContents += `<td>${infoEmp}</td>`;
-        } 
+        }
+
+        // ADD DELETE BUTTON
+        rowContents += `<td><button class='btn btn-danger btn-sm float-right delete'>X</button></td>`;
+
         rowNode.innerHTML = rowContents;
         tableBody.appendChild(rowNode);
     }
 }
-buildGrid();
 
-    // ADD EMPLOYEE
+// RUN BUILD GRID ON DOCUMENT LOAD
+buildGrid();
+// document.body.addEventListener('load', (e) => {
+//     buildGrid();
+// });
+
+// ADD EMPLOYEE
 form.addEventListener('submit', (e) => {
     // PREVENT FORM SUBMISSION
     e.preventDefault();
@@ -46,20 +55,14 @@ form.addEventListener('submit', (e) => {
     let newDepart = document.querySelector('#department').value;
 
     // ADD THE NEW EMPLOYEE TO A NEW ARRAY OBJECT
-    
+    let empArray = [newId, newName, newExt, newEmail, newDepart];
 
-        // PUSH THE NEW ARRAY TO THE *EXISTING* EMPLOYEES ARRAY   
-        // employee.push('addForm');
-        // BUILD THE GRID
-   
-    function createTable() {
-        let empTable = document.createElement('tbody');
-        for (let list = 0; list < employee.length; list++) {
-            let th = document.createElement('th');
-            th.innerHTML = employee[list];
-            true.appendChild(th);
-        }
-    };
+    // PUSH THE NEW ARRAY TO THE *EXISTING* EMPLOYEES ARRAY   
+    employees.push(empArray); 
+
+    // BUILD THE GRID
+    buildGrid();
+    
     // RESET THE FORM
     document.querySelector('#id').value = '';
     document.querySelector('#name').value = '';
@@ -69,7 +72,6 @@ form.addEventListener('submit', (e) => {
 
     // SET FOCUS BACK TO THE ID TEXT BOX
     document.querySelector('#id').focus();
-
 });
 
 // DELETE EMPLOYEE
@@ -79,13 +81,12 @@ empTable.addEventListener('click', (e) => {
         // GET THE SELECTED ROWINDEX FOR THE TR (PARENTNODE.PARENTNODE)
         if (confirm('Are you sure you want to delete this employee?')) {   
             // CALL DELETEROW() METHOD TO DELETE SPECIFIC ROW IN THE TABLE
-            employeeList.deleteRow(e.target.parentNode.parentNode.rowIndex);
-            counter--;
-            let numemployee = document.querySelector('#empCount');
-            numemployee.value = counter;
+            employees.splice(e.target.parentNode.parentNode.rowIndex, 1);
         }
     }
 
+    // REBUILD TABLE
+    buildGrid();
 });
         
 
